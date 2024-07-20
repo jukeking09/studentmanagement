@@ -37,9 +37,9 @@ public class studentController {
 //        return "StudentForm";
 //    }
     @PostMapping("/saveStudent")
-    public String saveStudent(@ModelAttribute("student") student student, @RequestParam("courseId") Long courseId) {
-        course course = courseService.getCourseById(courseId).get();
-        student.setCourse(course);
+    public String saveStudent(@ModelAttribute("student") student student){ //, @RequestParam("courseId") Long courseId)
+//        course course = courseService.getCourseById(courseId).get();
+//        student.setCourse(course);
         studentService.createstudent(student);
         List<student> students = studentService.getAllstudents();
         System.out.println(students);
@@ -48,17 +48,18 @@ public class studentController {
     @GetMapping("/createStudent")
     public String createStudent(Model model) {
         student newStudent = new student();
+        System.out.println(newStudent.getStudent_id());
         List<course> courseList = courseService.getAllCourses();
         model.addAttribute("student", newStudent);
+        model.addAttribute("newStudent", true);
         model.addAttribute("courses", courseList );
         List<student> students = studentService.getAllstudents();
         model.addAttribute("listStudents", students);
-        model.addAttribute("student1", new student());
-        model.addAttribute("courses1", courseService.getAllCourses());
-        model.addAttribute("subjects", subjectService.getAllsubjects());
+//        model.addAttribute("student1", new student());
+//        model.addAttribute("courses1", courseService.getAllCourses());
+//        model.addAttribute("subjects", subjectService.getAllsubjects());
         return "StudentForm";
     }
-
 
 
     @GetMapping("/subjectList/{course_id}")
@@ -81,10 +82,12 @@ public class studentController {
     }
     @GetMapping("/edit/{id}")
     public String editStudent(@PathVariable Long id, Model model) {
-        student student = studentService.getstudentById(id).get();
+        student student = studentService.getstudentById(id).get(); //.get() cause of optional return type
         model.addAttribute("student", student);
         model.addAttribute("courses", courseService.getAllCourses());
-        model.addAttribute("subjects", subjectService.getAllsubjects());
+        List<student> students = studentService.getAllstudents();
+        model.addAttribute("listStudents", students);
+//        model.addAttribute("subjects", subjectService.getAllsubjects());
         return "StudentForm";
     }
 

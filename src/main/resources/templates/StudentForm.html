@@ -8,10 +8,12 @@
 </head>
 <body>
 <form method="POST" th:action="@{/saveStudent}" th:object="${student}">
+    <input type="hidden" th:field="*{student_id}">
+<!--    ID:<p th:text="${student.student_id}"></p>-->
     Name:
     <input type="text" th:field="*{student_name}"/>
     Course:
-    <select id="courseSelect" name="courseId">
+    <select id="courseSelect" name="courseId" th:field="*{course.course_id}">
         <option value="">-- Select Course --</option>
         <option th:each="course : ${courses}" th:value="${course.course_id}" th:text="${course.course_name}"></option>
     </select>
@@ -19,8 +21,13 @@
     <select id="subjectSelect" th:field="*{subjects}">
         <option value="">-- Select Subject --</option>
     </select>
-    <button type="submit" value="Save">Save</button>
-    <button type="reset">Reset</button>
+    <div th:if="${newStudent}" style="margin-top:1em">
+        <button type="submit" value="Save">Add Student</button>
+    </div>
+    <div th:if="${newStudent != true }" style="margin-top:1em">
+        <button type="submit" value="Save">Edit Student</button>
+    </div>
+    <button type="reset" style="margin-top:0.3em"><a th:href="@{/createStudent}">Reset</a></button>
 </form>
 <table id="studentTable" class="table table-striped">
     <thead class="thead-dark">

@@ -62,8 +62,8 @@ public class student {
         return "student{" +
                 "student_id=" + student_id +
                 ", student_name='" + student_name + '\'' +
-                ", course=" + course +
-                ", subjects=" + subjects +
+//                ", course=" + course +
+//                ", subjects=" + subjects +
                 '}';
     }
 }
